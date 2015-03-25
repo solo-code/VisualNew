@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>ECharts</title>
+<script type="text/javascript" src="js/data.js">
+	/** Read ME
+	这是测试以头部文件的形式加载JS.
+	*/</script>
+    <script type="text/javascript">
+    	var xSpitNum = xLabel.length;
+		var ySpitNum = yLabel.length;
+	        function random(){
+		  var r = Math.round(Math.random() * 10);
+		  return (r * (r % 2 == 0 ? 1 : -1));
+		}
+
+		function randomDataArray() {
+		  var d = [];
+
+		  for(var i=1;i<xSpitNum;i=i+1){<!--  添加循环效果  -->
+			 for(var j=1;j<ySpitNum;j=j+1){
+				 d.push([
+				  i,
+				  j,
+				 // Math.abs(random())
+				  0
+			  ]);
+				 }//for
+		  }//for
+			len = arrays.length;
+			for(var i=0;i<len;i=i+1){
+				var intstr = arrays[i];
+				var temp = intstr.split(",");
+				var x = parseInt(temp[0]);
+				var y = parseInt(temp[1]);
+				var v = parseInt(temp[2]); 
+				var pos =  (x-1)*ySpitNum+y-2; 
+				
+					d[pos]=[
+						x,y,v
+					]
+			}
+
+		  return d;
+	}
+	function getOffSet(chartWidth,chartHeight) {
+
+			var Num = xSpitNum;
+			if(Num<ySpitNum){
+				Num = ySpitNum;
+			}
+			Num = Num*30;
+			if(chartWidth>chartHeight){
+				return chartHeight/Num;	
+			}else
+				return chartWidth/Num;
+		}
+    </script>
+    <link rel="stylesheet" href="js/echartDiv.css"/>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+
+    <div id="EchartDiv" ></div>
+     <!-- ECharts单文件引入 -->
+    <script src="js/echarts-all.js"></script>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts图表
+		var ele = document.getElementById('EchartDiv');
+        var myChart = echarts.init(ele); 
+		var t = '';
+		var chartWidth = ele.clientWidth;
+		var chartHeight = ele.clientHeight;
+		var offset = getOffSet(chartWidth,chartHeight)
+
+option = {
+    tooltip : {
+        trigger: 'axis',
+        showDelay : 0,
+        axisPointer:{
+            show: true,
+            type : 'shadow',
+           /* lineStyle: {
+                type : 'dashed',
+                width : 1
+            }*/
+        },
+		formatter:function (value){
+			var res = value[2][2];
+                return res;
+            }
+    },
+    legend: {
+        //data:['scatter1','scatter2']
+		data:['文档数量']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataZoom : {show: true},
+            dataView : {show: true, readOnly: false},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    xAxis : [
+        {
+            'name' : '技术主题',
+			type : 'value',
+            splitNumber: xSpitNum,
+            scale: true,
+			axisLabel : {
+					show: true,
+					<!--formatter: '{value} ms'-->
+					formatter : function(v) {
+                            return xLabel[v];
+                        }
+				}		
+        }
+    ],
+    yAxis : [
+        {
+            'name' : '功效',
+			type : 'value',
+            splitNumber: ySpitNum,
+            scale: true,
+			splitArea:{
+		  
+			  show : true,
+			  /*areaStyle :{//设置图表的背景颜色
+							color: [
+								'rgba(0,0,255,0.3)',
+								'rgba(0,0,200,0.3)',
+								'rgba(0,0,150,0.3)',
+								'rgba(0,0,100,0.3)',
+								'rgba(0,0,50,0.3)',
+							]//color
+						  }//areaStyle  */
+				},//splitArea
+		  axisLabel : {
+			  show: true,
+			  <!--formatter: '{value} ms'-->
+			  formatter : function(v) {
+					  return yLabel[v];
+				  }
+		  }	
+        }//yAxis
+    ],
+    series : [
+        {
+            name:'文档数量',
+            type:'scatter',
+			symbol: 'circle', //'circle', 'rectangle', 'triangle', 'diamond', 'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'
+            symbolSize: function (value){
+				t = value[2];
+				if(t==0)
+					return 0;
+				else
+	                return Math.round(value[2])+offset;
+            },
+            data: randomDataArray(),
+			itemStyle: {
+                        normal : {
+                            label : {
+                                show: true,//如何控制显示的label 位置
+								formatter: function (value){
+              					  return t;
+         						},
+								textStyle :{
+									color:'green',
+									fontWeight: 'bold',
+									align:'middle',
+									baseline:'top'	
+								}
+                            }
+                        },
+					emphasis: {
+            			color: 'yellow',
+				 }//emphasis
+            },
+        },
+       /* {
+            name:'scatter2',
+            type:'scatter',
+            symbolSize:20,
+            data: randomDataArray()
+        }*/
+    ]
+};             
+
+        // 为echarts对象加载数据 
+        myChart.setOption(option); 
+    </script>
+</body>
+</html>

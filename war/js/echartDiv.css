@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+#EchartDiv
+{
+background-color:#00FFFF;
+height:800px;
+width:1000px;
+overflow: scroll;
+vertical-align:bottom;
+}
+

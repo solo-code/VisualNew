@@ -1,0 +1,2 @@
+serviceClass: bistu.icdd.edu.client.GreetingService
+path: CB58ED1E0944E46E1D441A93DA94AE09.gwt.rpc
