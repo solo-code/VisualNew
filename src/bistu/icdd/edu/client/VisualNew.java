@@ -1,14 +1,12 @@
 package bistu.icdd.edu.client;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -131,6 +129,19 @@ public class VisualNew implements EntryPoint {
 	    temp.setBorder(false);
 	    temp.setLayout(new VerticalLayout(100));
 	    temp.setBottomToolbar(drawButton);
+	    
+	    HorizontalPanel testPanel = new HorizontalPanel(); 
+	    
+	    ListBox lb = new ListBox();
+	    
+	    Button deleteButton = new Button("删除",new ButtonListenerAdapter(){
+	    	@Override
+			public void onClick(Button button, EventObject e) {
+	    		
+	    	}
+	    });
+	    testPanel.add(lb);
+	    testPanel.add(deleteButton);
 	    
 		RootPanel.get("function").add(functionPanel);
 		RootPanel.get("effective").add(effectivePanel);
