@@ -1,12 +1,14 @@
 package bistu.icdd.edu.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
@@ -130,23 +132,30 @@ public class VisualNew implements EntryPoint {
 	    temp.setLayout(new VerticalLayout(100));
 	    temp.setBottomToolbar(drawButton);
 	    
-	    HorizontalPanel testPanel = new HorizontalPanel(); 
-	    
-	    ListBox lb = new ListBox();
-	    
-	    Button deleteButton = new Button("删除",new ButtonListenerAdapter(){
-	    	@Override
+	    Panel functionRes = new Panel();
+		Button clearFunctionButton = new Button("清空",new ButtonListenerAdapter(){
+			@Override
 			public void onClick(Button button, EventObject e) {
-	    		
-	    	}
-	    });
-	    testPanel.add(lb);
-	    testPanel.add(deleteButton);
+				functionArea.setText("");
+			}
+		});
+		functionRes.add(functionArea);
+		functionRes.setBottomToolbar(clearFunctionButton);
+		
+		Panel effectiveRes = new Panel();
+			Button clearEffectiveButton = new Button("清空",new ButtonListenerAdapter(){
+				@Override
+				public void onClick(Button button, EventObject e) {
+					effectiveArea.setText("");
+				}
+			});
+			effectiveRes.add(effectiveArea);
+			effectiveRes.setBottomToolbar(clearEffectiveButton);
 	    
 		RootPanel.get("function").add(functionPanel);
 		RootPanel.get("effective").add(effectivePanel);
-		RootPanel.get("functionResult").add(functionArea);
-		RootPanel.get("effectiveResult").add(effectiveArea);
+		RootPanel.get("functionResult").add(functionRes);
+		RootPanel.get("effectiveResult").add(effectiveRes);
 		RootPanel.get("errorLabelContainer").add(temp);
 	}
 	private String[] getInnerTexts_(TextArea texts,String erroMsg) {

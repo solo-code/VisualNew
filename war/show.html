@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
-<title>ECharts</title>
+<meta http-equiv="cache-control" content="no-cache">
+<title>功效矩阵</title>
 <script type="text/javascript" src="js/data.js">
 	/** Read ME
 	这是测试以头部文件的形式加载JS.
@@ -14,31 +15,32 @@
 		  return (r * (r % 2 == 0 ? 1 : -1));
 		}
 
-		function randomDataArray() {
+		function randomDataArray() {//生成要显示的数据，Bug，其实这个也不用生成然后用数据在40行填充。但是，数据填充的时候有时候会丢掉要显示的xLabel，或者YLabel，不清楚什么问题。
 		  var d = [];
-
-		  for(var i=1;i<xSpitNum;i=i+1){<!--  添加循环效果  -->
+		  <!--  添加循环效果  -->
+		 for(var i=1;i<xSpitNum;i=i+1){
 			 for(var j=1;j<ySpitNum;j=j+1){
 				 d.push([
 				  i,
 				  j,
-				 // Math.abs(random())
+				// Math.abs(random())
 				  0
 			  ]);
 				 }//for
 		  }//for
-			len = arrays.length;
+
+			var len = arrays.length;
 			for(var i=0;i<len;i=i+1){
 				var intstr = arrays[i];
 				var temp = intstr.split(",");
 				var x = parseInt(temp[0]);
 				var y = parseInt(temp[1]);
 				var v = parseInt(temp[2]); 
-				var pos =  (x-1)*ySpitNum+y-2; 
+				var pos =  (x-1)*(ySpitNum-1)+y-1; 
 				
-					d[pos]=[
+						d[pos]=[
 						x,y,v
-					]
+					];
 			}
 
 		  return d;
@@ -49,7 +51,7 @@
 			if(Num<ySpitNum){
 				Num = ySpitNum;
 			}
-			Num = Num*30;
+			Num = Num*5;
 			if(chartWidth>chartHeight){
 				return chartHeight/Num;	
 			}else
@@ -75,19 +77,23 @@
 
 option = {
     tooltip : {
-        trigger: 'axis',
+        //trigger: 'item',//'axis'触发器，默认为 item
         showDelay : 0,
+        enterable :true,//是否可以进入提示信息，true可以，然后就可以交互了。
         axisPointer:{
             show: true,
             type : 'shadow',
-           /* lineStyle: {
+           /* lineStyle: {//移动时的指示线
                 type : 'dashed',
                 width : 1
             }*/
         },
 		formatter:function (value){
 			var res = value[2][2];
-                return res;
+			var x = xLabel[value[2][0]];
+			var y = yLabel[value[2][1]];
+                //return "<a href='http://www.baidu.com' target='_blank'>"+x+","+y+"</a>";//编写链接，就可以交互了。
+			return x+","+y;
             }
     },
     legend: {
@@ -112,10 +118,16 @@ option = {
             scale: true,
 			axisLabel : {
 					show: true,
+					rotate: 30,//X轴标签旋转
+					textStyle :{
+                    	fontWeight : 'bold',
+                    	color : "black",
+                    },
 					<!--formatter: '{value} ms'-->
 					formatter : function(v) {
                             return xLabel[v];
-                        }
+                        },
+                    
 				}		
         }
     ],
@@ -123,7 +135,7 @@ option = {
         {
             'name' : '功效',
 			type : 'value',
-            splitNumber: ySpitNum,
+            splitNumber: ySpitNum,//Y的分割数
             scale: true,
 			splitArea:{
 		  
@@ -152,19 +164,21 @@ option = {
             name:'文档数量',
             type:'scatter',
 			symbol: 'circle', //'circle', 'rectangle', 'triangle', 'diamond', 'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'
-            symbolSize: function (value){
+            symbolSize: function (value){//圆圈的大小
 				t = value[2];
 				if(t==0)
 					return 0;
 				else
-	                return Math.round(value[2])+offset;
+	                return Math.round(value[2])+offset;//这种情况有ＢＵＧ，由于数据中没有大于10的，所以没有绘制出特大号的圆圈，如果数据很大的话会有问题。
             },
             data: randomDataArray(),
-			itemStyle: {
+			itemStyle: {//这个是控制气泡附近的数字的
                         normal : {
                             label : {
-                                show: true,//如何控制显示的label 位置
+                                show: true,
 								formatter: function (value){
+									if(t==0)//不显示0
+										t='';
               					  return t;
          						},
 								textStyle :{

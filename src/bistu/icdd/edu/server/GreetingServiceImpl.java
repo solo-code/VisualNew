@@ -140,6 +140,12 @@ public String toStr(String function[] ,String effective[]) throws IllegalArgumen
 			int yLablePos[] = findPos(list,effective,EFFECTIVE);
 			array = getAll(xLablePos,yLablePos,list);
 		}
+		
+		if(array==null){
+			array = new XYV[1];
+			array[0] = new XYV(0,0,0);
+		}
+		
 		for(int i=0;i<array.length;i++){
 			sbl.append(array[i]);
 		}
