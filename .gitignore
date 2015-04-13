@@ -10,4 +10,4 @@ out/
 
 logs/ 
 
-.jar
+.jar .class
