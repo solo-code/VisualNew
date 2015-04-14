@@ -1,11 +1,16 @@
 @charset "utf-8";
 /* CSS Document */
+#wholeBody{
+	height:1000px;
+	width:1500px;
+}
 
 #EchartDiv
 {
+margin:0 auto;
 background-color:#00FFFF;
 height:800px;
-width:1200px;
+width:1400px;
 overflow: scroll;
 vertical-align:bottom;
 }

@@ -60,13 +60,25 @@
     </script>
     <link rel="stylesheet" href="js/echartDiv.css"/>
 </head>
-<body>
+<body id="wholeBody">
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 
     <div id="EchartDiv" ></div>
      <!-- ECharts单文件引入 -->
     <script src="js/echarts-all.js"></script>
 <script type="text/javascript">
+	
+	var xbaseWidth = 30;
+	var ybaseWidth = 20;
+	//动态设置画图区域的大小
+	if(xSpitNum>25){
+		document.getElementById("EchartDiv").style.width = (xbaseWidth*xSpitNum)+"px";
+		
+	}
+	if(ySpitNum>40){
+		document.getElementById("EchartDiv").style.height = (ybaseWidth*ySpitNum)+"px";	
+	}
+
         // 基于准备好的dom，初始化echarts图表
 		var ele = document.getElementById('EchartDiv');
         var myChart = echarts.init(ele); 
@@ -80,6 +92,8 @@ option = {
         //trigger: 'item',//'axis'触发器，默认为 item
         showDelay : 0,
         enterable :true,//是否可以进入提示信息，true可以，然后就可以交互了。
+        backgroundColor : 'rgba(125,125,125,0.7)',
+		//textStyle: { color:'#FFFFFF' },//这个设置没有作用
         axisPointer:{
             show: true,
             type : 'shadow',
@@ -92,8 +106,8 @@ option = {
 			var res = value[2][2];
 			var x = xLabel[value[2][0]];
 			var y = yLabel[value[2][1]];
-                //return "<a href='http://www.baidu.com' target='_blank'>"+x+","+y+"</a>";//编写链接，就可以交互了。
-			return x+","+y;
+                return "<a href='http://www.baidu.com' target='_blank'>"+x+","+y+"</a>";//编写链接，就可以交互了。
+			//return x+","+y;
             }
     },
     legend: {

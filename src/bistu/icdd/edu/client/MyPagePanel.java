@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.gwtext.client.core.EventObject;
 import com.gwtext.client.core.Ext;
 import com.gwtext.client.core.ExtElement;
-import com.gwtext.client.data.Record;
 import com.gwtext.client.data.Store;
 import com.gwtext.client.widgets.Button;
 import com.gwtext.client.widgets.event.ButtonListenerAdapter;

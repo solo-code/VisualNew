@@ -18,7 +18,9 @@ public class HandleData {
 	public static HashMap<Integer,FunctionEffectiveBean> map = null;
 	
 	public static void initData() {
-		String fileName = "bistu/icdd/edu/server/data/resultcopy.txt";
+//		String fileName = "bistu/icdd/edu/server/data/resultcopy.txt";
+//		String fileName = "bistu/icdd/edu/server/data/TechnologyEffectiveNum.txt";
+		String fileName = "bistu/icdd/edu/server/data/TechnologyEffectiveNum11.txt";
 		InputStream in = HandleData.class.getClassLoader().getResourceAsStream(fileName);
 		InputStreamReader insr = new InputStreamReader(in);
 		BufferedReader br = new BufferedReader(insr);
@@ -27,7 +29,7 @@ public class HandleData {
 		int count = 0;
 		try {
 			while((line=br.readLine())!=null){
-				String temp[] = line.split(",");
+				String temp[] = line.split("[\t| |,]");
 				FunctionEffectiveBean feb = new FunctionEffectiveBean(temp);
 //				if(map.containsKey(feb.hashCode())){
 //					System.out.println(feb.getEffective()+"\t"+count++);

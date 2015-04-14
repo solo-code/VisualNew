@@ -20,8 +20,22 @@ public class TestGetList {
 	public void testEffective() {
 		
 		List<FunctionEffectiveBean> list = HandleData.getEffectiveList();
-		org.junit.Assert.assertEquals(list.size(), 1489);//
+//		org.junit.Assert.assertEquals(list.size(), 4188);//
+		for(int i=0;i<list.size();i++){
+			FunctionEffectiveBean feb = list.get(i);
+			System.out.println(feb.getEffective());
+		}
 	}
+	
+//	@Test
+//	public void testTecnology() {
+//		
+//		List<FunctionEffectiveBean> list = HandleData.getFunctionList();
+//		for(int i=0;i<list.size();i++){
+//			FunctionEffectiveBean feb = list.get(i);
+//			System.out.println(feb.getFunction());
+//		}
+//	}
 	
 	@After
 	public void destoryData(){
